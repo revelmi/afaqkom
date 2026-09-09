@@ -1009,7 +1009,7 @@
 </head>
 <body>
 
-    <!-- Header -->
+   <!-- Header -->
 <header class="site-header">
     <a href="#" class="logo">
         <img src="https://i.imgur.com/6flEAlW.png" alt="AFAQKOM Online Academy">
@@ -1037,6 +1037,24 @@
     width: 180px;
     height: auto;
     display: block;
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+    .site-header {
+        height: 75px;
+    }
+
+    .site-header .logo {
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .site-header .logo img {
+        width: 150px;
+        max-width: 60vw;
+        height: auto;
+    }
 }
 </style>
 
