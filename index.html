@@ -1009,12 +1009,15 @@
 </head>
 <body>
 
-   <!-- Header -->
+<!-- Header -->
 <header class="site-header">
     <a href="#" class="logo">
         <img src="https://i.imgur.com/6flEAlW.png" alt="AFAQKOM Online Academy">
     </a>
-    <a href="https://edu.afaqkom.com/" style="position: absolute; right: 40px; top: 50%; transform: translateY(-50%); background-color: #27B8A5; color: #fff; padding: 8px 20px; border-radius: 20px; font-weight: 600; font-size: 0.95rem; text-decoration: none; z-index: 101;">تسجيل الدخول</a>
+    <a href="https://edu.afaqkom.com/" class="login-btn">
+        <i class="fa-solid fa-user"></i>
+        <span>تسجيل الدخول</span>
+    </a>
 </header>
 
 <style>
@@ -1040,6 +1043,30 @@
     display: block;
 }
 
+/* زر تسجيل الدخول */
+.login-btn {
+    position: absolute;
+    right: 180px; /* هنا فين تحكمنا في البلاصة باش يقرب للوسط شوية (قصاد البلاصة الحمراء) */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #27B8A5;
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background-color: #1f9686;
+}
+
 /* 📱 Mobile */
 @media (max-width: 768px) {
     .site-header {
@@ -1056,9 +1083,28 @@
         max-width: 60vw;
         height: auto;
     }
+
+    /* في الموبايل يرجع على شكل أيقونة دائرية في الجنب باش ما يخربش اللوجو */
+    .login-btn {
+        right: 15px;
+        padding: 0;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        justify-content: center;
+    }
+
+    /* إخفاء كلمة تسجيل الدخول في الموبايل وإظهار الأيقونة بوحدها */
+    .login-btn span {
+        display: none;
+    }
+
+    .login-btn i {
+        font-size: 1rem;
+        margin: 0;
+    }
 }
 </style>
-
     <!-- Hero Section -->
     <section class="hero" id="about">
         <div class="container">
