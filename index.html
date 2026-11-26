@@ -1012,12 +1012,28 @@
 <!-- Header -->
 <header class="site-header">
     <a href="#" class="logo">
-        <img src="https://i.imgur.com/6flEAlW.png" alt="AFAQKOM Online Academy">
+        <img src="https://i.imgur.com/6flEAlW.png" alt="AFAQKOM Online Academy" />
     </a>
-    <a href="https://edu.afaqkom.com/" class="login-btn">
-        <i class="fa-solid fa-user"></i>
-        <span>تسجيل الدخول</span>
-    </a>
+
+    <!-- زر القائمة (3 شرطات) -->
+    <div class="menu-wrapper">
+        <button class="menu-toggle-btn" id="menuToggle" aria-label="القائمة">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <!-- القائمة المنسدلة -->
+        <div class="dropdown-menu" id="dropdownMenu">
+            <a href="https://edu.afaqkom.com/" class="dropdown-item">
+                <i class="fa-solid fa-user"></i>
+                <span>تسجيل الدخول</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="https://afaqkom.com/certificat.html" class="dropdown-item">
+                <i class="fa-solid fa-certificate"></i>
+                <span>التحقق من الشهادات</span>
+            </a>
+        </div>
+    </div>
 </header>
 
 <style>
@@ -1027,6 +1043,7 @@
     height: 85px;
     background: #08263b;
     box-sizing: border-box;
+    z-index: 1000;
 }
 
 .site-header .logo {
@@ -1043,28 +1060,98 @@
     display: block;
 }
 
-/* زر تسجيل الدخول */
-.login-btn {
+/* حاوية زر المينيو والقائمة */
+.menu-wrapper {
     position: absolute;
-    right: 180px; /* هنا فين تحكمنا في البلاصة باش يقرب للوسط شوية (قصاد البلاصة الحمراء) */
+    right: 180px; /* نفس البلاصة اللي كانت فيها الدائرة الحمراء */
     top: 50%;
     transform: translateY(-50%);
-    background-color: #27B8A5;
-    color: #fff;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-decoration: none;
-    z-index: 101;
+    z-index: 1001;
+}
+
+/* زر 3 شرطات */
+.menu-toggle-btn {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    width: 46px;
+    height: 46px;
+    border-radius: 10px;
+    font-size: 1.35rem;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
     transition: all 0.3s ease;
 }
 
-.login-btn:hover {
-    background-color: #1f9686;
+.menu-toggle-btn:hover,
+.menu-toggle-btn.active {
+    background-color: #27B8A5;
+    border-color: #27B8A5;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(39, 184, 165, 0.35);
+}
+
+/* القائمة المنسدلة */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 58px;
+    right: 0;
+    background-color: #ffffff;
+    min-width: 225px;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(7, 29, 48, 0.22);
+    border: 1px solid #e5e7eb;
+    overflow: hidden;
+    animation: fadeInMenu 0.25s ease;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+@keyframes fadeInMenu {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    color: #0B2942;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.dropdown-item i {
+    color: #27B8A5;
+    font-size: 1.05rem;
+    width: 20px;
+    text-align: center;
+}
+
+.dropdown-item:hover {
+    background-color: #E8F8F5;
+    color: #159987;
+    padding-right: 22px;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #f1f5f9;
+    margin: 0;
 }
 
 /* 📱 Mobile */
@@ -1084,27 +1171,55 @@
         height: auto;
     }
 
-    /* في الموبايل يرجع على شكل أيقونة دائرية في الجنب باش ما يخربش اللوجو */
-    .login-btn {
+    .menu-wrapper {
         right: 15px;
-        padding: 0;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        justify-content: center;
     }
 
-    /* إخفاء كلمة تسجيل الدخول في الموبايل وإظهار الأيقونة بوحدها */
-    .login-btn span {
-        display: none;
+    .menu-toggle-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1.2rem;
     }
 
-    .login-btn i {
-        font-size: 1rem;
-        margin: 0;
+    .dropdown-menu {
+        top: 52px;
+        min-width: 210px;
     }
 }
 </style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const menuToggle = document.getElementById("menuToggle");
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    const toggleIcon = menuToggle.querySelector("i");
+
+    menuToggle.addEventListener("click", function (e) {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle("show");
+        menuToggle.classList.toggle("active");
+
+        // تبديل الأيقونة بين 3 شرطات وعلامة X
+        if (dropdownMenu.classList.contains("show")) {
+            toggleIcon.classList.remove("fa-bars");
+            toggleIcon.classList.add("fa-xmark");
+        } else {
+            toggleIcon.classList.remove("fa-xmark");
+            toggleIcon.classList.add("fa-bars");
+        }
+    });
+
+    // إغلاق القائمة فاش تكليكي فشي بلاصة أخرى في الصفحة
+    document.addEventListener("click", function (e) {
+        if (!menuToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.remove("show");
+            menuToggle.classList.remove("active");
+            toggleIcon.classList.remove("fa-xmark");
+            toggleIcon.classList.add("fa-bars");
+        }
+    });
+});
+</script>
     <!-- Hero Section -->
     <section class="hero" id="about">
         <div class="container">
